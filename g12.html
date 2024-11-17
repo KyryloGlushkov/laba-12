@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Language learning</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Arial', sans-serif;
+            background-image: url(bg.jpg);
+            background-size: cover;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            color: #fff;
+            padding: 20px;
+            overflow: hidden;
+        }
+
+        .container {
+            background-color: rgba(0, 0, 0, 0.7);
+            border-radius: 20px;
+            padding: 20px;
+            box-shadow: 0 4px 30px rgba(0, 0, 0, 0.3);
+            width: 90%;
+            max-width: 450px;
+            text-align: center;
+            border: 3px solid transparent;
+            position: relative;
+            overflow: hidden;
+            transition: transform 0.3s ease-in-out, box-shadow 0.3s ease;
+        }
+
+        .container:hover {
+            transform: scale(1.05);
+            box-shadow: 0 10px 40px rgba(0, 4, 255, 0.3);
+        }
+
+        h1 {
+            font-size: 20px;
+            color: #fff;
+            margin-bottom: 15px;
+            text-transform: uppercase;
+            text-shadow: 0 0 5px #0400ff, 0 0 15px #0400ff;
+        }
+
+        .difficulty-selector {
+            margin: 15px 0;
+            text-align: center;
+        }
+
+        .difficulty-selector .custom-radio {
+            display: inline-block;
+            position: relative;
+            margin: 0 10px;
+            font-size: 20px;
+            color: #fff;
+            cursor: pointer;
+        }
+
+        .difficulty-selector .custom-radio input {
+            display: none;
+        }
+
+        .difficulty-selector .custom-radio span {
+            display: inline-block;
+            width: 20px;
+            height: 20px;
+            margin-right: 8px;
+            border: 2px solid #fff;
+            border-radius: 50%;
+            vertical-align: middle;
+            transition: border-color 0.3s ease, background-color 0.3s ease;
+        }
+
+        .difficulty-selector .custom-radio input:checked + span {
+            background: #007bff;
+            border-color: #007bff;
+        }
+
+        .difficulty-selector .custom-radio:hover span {
+            border-color: #00ffcc;
+        }
+
+        .difficulty-selector .custom-radio span {
+            background-color: #1a1a1a;
+            border-color: #fff;
+        }
+
+        .game-info p {
+            font-size: 20px;
+            margin-bottom: 10px;
+            color: #fff;
+            text-shadow: 0 0 5px #1100ff, 0 0 10px #0400ff;
+        }
+
+        .word-card-wrapper {
+            width: 100%;
+            height: 180px;
+            margin: 20px auto;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background-color: #fff;
+            border-radius: 15px;
+            box-shadow: 0 0 15px rgba(0, 26, 255, 0.5);
+            transition: box-shadow 0.3s ease, transform 0.3s ease;
+        }
+
+        .word-card-wrapper:hover {
+            transform: scale(1.05);
+            box-shadow: 0 0 30px rgba(0, 17, 255, 0.8);
+        }
+
+        .word-card {
+            font-size: 20px;
+            font-weight: bold;
+            color: #ffffff;
+            text-shadow: 0 0 5px #1900ff, 0 0 15px #0400ff, 0 0 25px #1900ff;
+        }
+
+        #user-input {
+            margin-top: 15px;
+            padding: 12px;
+            width: 100%;
+            border-radius: 12px;
+            border: 2px solid #ff00ff;
+            background-color: #1a1a1a;
+            color: #fff;
+            font-size: 20px;
+            outline: none;
+            transition: border-color 0.3s ease;
+        }
+
+        #user-input:focus {
+            border-color: #00ffcc;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 12px;
+            width: 100%;
+            background: linear-gradient(135deg, #ff00ff, #00ffcc);
+            color: #fff;
+            font-size: 1.2rem;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(0, 255, 255, 0.4);
+            transition: transform 0.2s ease, box-shadow 0.3s ease;
+        }
+
+        button:hover {
+            transform: scale(1.05);
+            box-shadow: 0 8px 20px rgba(0, 255, 255, 0.7);
+        }
+
+        #restart-button {
+            background: linear-gradient(135deg, #ff007f, #ffcc00);
+            box-shadow: 0 4px 15px rgba(255, 0, 255, 0.4);
+            margin-top: 15px;
+            display: inline-block;
+        }
+
+        /* Adaptive styles */
+        @media (max-width: 768px) {
+            .container {
+                width: 95%;
+                max-width: none;
+                padding: 15px;
+            }
+            h1 {
+                font-size: 18px;
+            }
+            .game-info p {
+                font-size: 18px;
+            }
+            .difficulty-selector .custom-radio {
+                font-size: 18px;
+            }
+            .word-card {
+                font-size: 18px;
+            }
+            #user-input {
+                font-size: 18px;
+                padding: 10px;
+            }
+            button {
+                font-size: 1rem;
+                padding: 10px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>Language learning</h1>
+        <div class="difficulty-selector">
+            <h3>Choose difficulty:</h3>
+            <label class="custom-radio">
+                <input type="radio" name="difficulty" value="easy" checked>
+                <span></span> Easy
+            </label>
+            <label class="custom-radio">
+                <input type="radio" name="difficulty" value="medium">
+                <span></span> Medium
+            </label>
+            <label class="custom-radio">
+                <input type="radio" name="difficulty" value="hard">
+                <span></span> Hard
+            </label>
+        </div>
+        <div class="game-info">
+            <p>Step: <span id="current-step">1</span> of <span id="total-steps">10</span></p>
+            <p class="score-board">
+                Correct: <span id="correct-count">0</span> | Uncorrect: <span id="incorrect-count">0</span>
+            </p>
+        </div>
+        <div id="word-card-wrapper" class="word-card-wrapper">
+            <div id="word-card" class="word-card"></div>
+        </div>
+        <input type="text" id="user-input" placeholder="Enter the translation">
+        <button id="check-answer">Check</button>
+        <button id="restart-button">Restart</button>
+    </div>
+
+    <script>
+        const wordPools = {
+            easy: {
+                words: {
+                    'hello': 'привіт', 'world': 'світ', 'car': 'автомобіль', 'apple': 'яблуко', 'friend': 'друг',
+                    'school': 'школа', 'book': 'книга', 'tree': 'дерево', 'food': 'їжа', 'water': 'вода'
+                },
+                totalSteps: 10
+            },
+            medium: {
+                words: {
+                    'computer': 'комп’ютер', 'language': 'мова', 'study': 'вивчати', 'adorable': 'чарівний', 'house': 'будинок',
+                    'office': 'офіс', 'school': 'школа', 'restaurant': 'ресторан', 'television': 'телевізор', 'university': 'університет'
+                },
+                totalSteps: 10
+            },
+            hard: {
+                words: {
+                    'knowledge': 'знання', 'education': 'освіта', 'university': 'університет', 'opportunity': 'можливість', 'research': 'дослідження',
+                    'scientist': 'вчений', 'chemistry': 'хімія', 'mathematics': 'математика', 'technology': 'технологія', 'philosophy': 'філософія'
+                },
+                totalSteps: 10
+            }
+        };
+
+        let currentStep = 1;
+        let correctCount = 0;
+        let incorrectCount = 0;
+        let currentWord = '';
+        let currentTranslation = '';
+        let selectedDifficulty = 'easy';
+
+        document.querySelector('#check-answer').addEventListener('click', checkAnswer);
+        document.querySelector('#restart-button').addEventListener('click', restartGame);
+        document.querySelectorAll('input[name="difficulty"]').forEach(radio => {
+            radio.addEventListener('change', function() {
+                selectedDifficulty = this.value;
+                restartGame();
+            });
+        });
+
+        function restartGame() {
+            correctCount = 0;
+            incorrectCount = 0;
+            currentStep = 1;
+            document.querySelector('#correct-count').textContent = correctCount;
+            document.querySelector('#incorrect-count').textContent = incorrectCount;
+            document.querySelector('#current-step').textContent = currentStep;
+            setNewWord();
+        }
+
+        function setNewWord() {
+            const wordPool = wordPools[selectedDifficulty].words;
+            const words = Object.keys(wordPool);
+            currentWord = words[Math.floor(Math.random() * words.length)];
+            currentTranslation = wordPool[currentWord];
+
+            document.querySelector('#word-card').textContent = currentWord;
+            document.querySelector('#user-input').value = '';
+        }
+
+        function checkAnswer() {
+            const userAnswer = document.querySelector('#user-input').value.trim();
+            if (!userAnswer) {
+                alert('Please enter a translation!');
+                return;
+            }
+
+            if (userAnswer.toLowerCase() === currentTranslation.toLowerCase()) {
+                correctCount++;
+            } else {
+                incorrectCount++;
+            }
+
+            document.querySelector('#correct-count').textContent = correctCount;
+            document.querySelector('#incorrect-count').textContent = incorrectCount;
+            currentStep++;
+            document.querySelector('#current-step').textContent = currentStep;
+
+            if (currentStep > wordPools[selectedDifficulty].totalSteps) {
+                alert('Game over!');
+                restartGame();
+            } else {
+                setNewWord();
+            }
+        }
+
+        restartGame(); 
+    </script>
+</body>
+</html>
